@@ -477,3 +477,146 @@ section {
 
     color: var(--color-text-muted);
 }
+
+
+
+
+
+
+
+/*----------------===============================================-PROGRAM SECTION -===========================================================---------*/
+
+.programs {
+    /*layout */
+    position: relative;
+
+    /* box model */
+    padding-block: var(--section-padding-y); /* vertical padding */
+
+    /*visual */
+    background-color: transparent; /* to see the hero background behind it. */
+}
+
+/* programs header (title+ subtitle) */
+.programs-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    max-width: 900px;
+    margin: 0 auto; /* center horizontally */
+
+    /* box model */
+    margin-bottom: 3rem;
+
+    /* typography */
+    font-size: clamp(1rem, 6vw, 1.5rem);
+    font-weight: 100;
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: 0.08rem;
+}
+
+.neon-title {
+    color: var(--color-accent);
+}
+.programs-header .programs-subtitle {
+    /* typography */
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+/* -----program grid ---- */
+.programs-grid {
+    /*layout */
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 equal columns on desktop */
+    gap: 24px; /* space between cards */
+
+    /*box model */
+    margin-top: 2.5rem;
+}
+
+/* Responsive: tablets and smaller */
+@media (max-width: 768px) {
+    .programs-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 columns on tablets */
+    }
+}
+
+/* Responsive: mobile phones */
+@media (max-width: 480px) {
+    .programs-grid {
+        grid-template-columns: 1fr; /* 1 column on mobile */
+    }
+}
+
+/* program card */
+.program-card {
+    /*layout */
+    position: relative;
+    display: block;
+
+    /* box model */
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    min-height: 260px; /* ensure consistent height */
+    flex-wrap: wrap;
+
+    /* visual */
+    filter: grayscale(80%);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-subtle);
+
+    /* interactions */
+    cursor: pointer;
+}
+
+/*image fills the card. */
+.program-image {
+    /*layout */
+    display: block;
+
+    /*box model */
+    width: 100%;
+    height: 100%;
+    
+    /*visual */
+    object-fit: cover;
+    transition: 0.35s cubic-bezier(0.22, 0.61, 0.36, 1), /* apple card float animation */
+                box-shadow 0.45s cubic-bezier(0.22, 0.61, 0.36, 1); /* shadow moves slower for depth */
+}
+
+.program-card-text {
+    /*layout */
+    position: absolute;
+    inset-inline: 18px;
+    bottom: 18px;
+
+    /* box model */
+    padding: 3px 5px;
+
+    /* typography */
+    font-size: 1.3rem;
+    font-weight: 700;
+
+    
+}
+
+/* card hover */
+.program-image:hover {
+    transform: translateY(-6px) scale(1.1);   /* move it up by 6px and make it bigger by 1.03 */
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
+}
+
+.program-card:hover {
+    filter: grayscale(0%);
+     color: var(--color-accent);
+}
+
+.program-card-text:hover {
+    color: var(--color-accent);
+}
+
