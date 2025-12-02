@@ -299,29 +299,31 @@ section {
     text-align: center; /* center text inside */
 
     /* box model */
-    padding-top: 6rem; /* space from navbar */
+    padding-top: 3rem; /* space from navbar */
     padding-bottom: 5rem; /* bottom padding */
 
     /* visual */
     overflow: visible; /* allow elements to overflow */
+    z-index: 0;
 }
 
 /* glowing background behind title + image */
 .hero::before {
-    content: "";
+    content: ""; /* create the element but show no text */
     /* layout */
-    position: absolute;
-    inset: 0; /* top, right, bottom, left = 0 */
+    position: absolute; /* let it float freely over the hero section */
+    inset: 0; /* top, right, bottom, left = 0  make this background cover the entire hero section */
     margin-inline: auto; /* center horizontally */
 
     /* visual */
     background:
         radial-gradient(circle at center,
             rgba(155,214,0,0.4) 0%,
-            rgba(5,5,9,0.4) 45%,
+            rgba(5,5,9,0.4) 60%,
             #050509 80%);
     opacity: 0.9;
     z-index: -1; /* place behind hero content */;
+    
 }
 
 /* -------hero title--------- */
@@ -333,7 +335,7 @@ section {
     margin-bottom: 3rem;
 
     /* typography */
-    font-size: clamp(3rem, 6vw, 4.8rem); /* responsive font size between 3rem and 4.8rem based on viewport width */
+    font-size: clamp(3rem, 6vw, 4.8rem); /* make the text never smaller then 3 , never bigger then 4.8 and ideally 6% of screen width*/
     line-height: 1.04;
     font-weight: 900;
     text-transform: uppercase;
@@ -341,6 +343,11 @@ section {
 
     /* visual */
     color: var(--color-text);   
+}
+
+.hero-highlight-faded {
+    color: #0b170b;
+    -webkit-text-stroke: 0.2px #ccff00;
 }
 /* make "your" in neon */
 .hero-highlight {
@@ -352,7 +359,7 @@ section {
     /*layout */
     display:flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     
     /*box model */
     width: 70%;
@@ -369,7 +376,7 @@ section {
     overflow: visible; /* clip overflow for rounded corners */
 
     /* visual */
-    box-shadow: 0 -50px 80px rgba(155,214,0,0.3);
+    box-shadow: 0 -50px 80px rgba(155,214,0,0.15);
 }
 
 .hero-image {
