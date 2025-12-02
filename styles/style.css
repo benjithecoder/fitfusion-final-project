@@ -1,0 +1,472 @@
+/*------------------------------------------------------GLOBAL SETTINGS @ DESIGN---------------------------------------------------------------*/
+
+/*---------------------------CSS VARIABLES (COLORS, SPACING, FONT SIZES ETC---------------------------------------------------------------*/
+:root {
+    /* core colors */
+    --color-bg: #050509; /* main page background (almost fully black) */
+    --color-surface: #0f1015; /* cards background / sections background (very dark grey) */
+    --color-surface-soft: #161722; /* cards / sections background on hover (slightly lighter dark grey) */
+    --color-text: #f5f5f5; /* main text color (almost white) */
+    --color-text-muted: #b0b0b9; /*secondary text */
+    --color-accent: #ccff00; /* neon lime accent */
+    --color-accent-soft: #9bd600; /* softer neon lime accent */
+    --color-border: #2a2b36; /* subtle borders */
+
+    /* Status colors if needed later */
+    --color-positive:#4ade80;
+    --color-warning: #facc15;
+    --color-danger: #f97373;
+
+    /* Typography */
+    --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;  /* a priority list of fonts your site will try to use, from BEST → fallback.
+    system-ui and -apple-system will use the user's default OS font. blinkMacSystemFont is for Chrome on macOS. The rest are common web-safe fonts. the latest fallback is sans-serif */
+
+    /* Layout */
+    --max-width: 1120px;   /* main content width 1120px is a sweet spot */
+    --page-padding-x: 1.5rem; /* horizontal page padding  , REM= when someone zooms or increases base font size (accessibility), the whole layout adapts with rem not with px . */
+    --section-padding-y: 5rem; /* vertical padding between sections */
+
+    /* Border Radius */
+    --radius-lg: 24px; /* large border radius for modals and large cards */
+    --radius-md: 16px; /* default border radius for cards and buttons */
+    --radius-pill: 999px; /* pill-shaped border radius for buttons and badges */
+
+    /* Shadows */
+    --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55); /* soft shadow for modals and elevated elements / x-offset, y-offset, blur , color */
+    --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.35); /* subtle shadow for cards and buttons */
+}
+
+/*----------------------------------------------------------------------------RESET/ NORMALIZE-----------------------------------------------------------------------*/
+
+/* ----------------------------------------------Remove default margin + use border-box sizing everywhere ----------------------------------------------------- */
+*, 
+*::before, 
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} /* this is global reset and removes all css rules. it affects all elements in the page. * = apply these rules to every element on the page. before and after means : also apply these rules to the pseudo elements before and after any element.
+    border-box: if you say width : 300px, the padding and border will be included in that 300px, otherwise the box will include the width + padding + border which will make it larger than 300px. */
+
+/* make images behave nicely by default */
+img {
+    max-width: 100%; /* prevent images from overflowing their containers */
+    display: block; /* remove bottom whitespace */
+}
+
+/* remove underline from links by default */
+a {
+    text-decoration: none;
+    color: inherit; /* inherit text color from parent */
+}
+
+/* remove default bullet styles on ul elements */
+ul {
+    list-style: none;
+}
+
+/*--------------------------------------------------------PAGE BASE STYLES ---------------------------------------------------------------*/
+
+html,
+body {
+    font-family: var(--font-main);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased; /* improve font rendering to make the text sharper , and less pixel-ly */
+    scroll-behavior: smooth; /* smooth scrolling for anchor links */
+}
+
+/* a generic page wrapper to center the content and limit width */
+.page-container {
+    max-width: var(--max-width);
+    margin: 0 auto; /* center horizontally */
+    padding: 0 var(--page-padding-x); /* horizontal padding */
+}
+
+/* generic section padding for vertical spacing between sections */
+section {
+    padding-block: var(--section-padding-y); /* vertical padding */
+}
+
+/* helper class for screen reader content */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0,0,0,0);
+    clip-path: inset(50%);
+    overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*----------------===============================================-HEADER AND NAVBAR LAYOUT -===========================================================---------*/
+/* keep header on top of sections and give it breathing room */
+.site-header {
+    z-index: 100; /* make sure it stays on top of other content */
+    position: sticky;
+    top: 0; /* stick to top of viewport */
+
+    background-color: rgba(5,5,9,0.5); /* semi-transparent background to allow blur effect */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* this is only for the blur in safari */ 
+}
+
+.navbar {
+    /*layout*/
+    display: flex; /* place children (left/ center/ right) in a row */
+    align-items: center; /* vertically center items */
+    justify-content: space-between; /* space between left/ center/ right */
+
+    /* box model */
+    width: 100%; /* limit width of navbar */
+    padding: 0 var(--page-padding-x);
+   
+    /*typography */
+    font-family: var(--font-main);
+}
+
+.navbar-inner {
+    /*layout */
+    display: flex; /* place children (left/ center/ right) in a row */
+    align-items: center; /* vertically center items */
+    justify-content: space-between;
+    gap: 24px;
+    
+    /* box model */
+    max-width: 1500px;
+    width: 100%;
+    margin: 0 auto; /* center horizontally */
+    padding: 12px 24px; /* vertical + horizontal padding */
+
+    /* typography */
+    font-family: var(--font-main);
+}
+
+/* left , center, right groups share the same vertical alignment */
+.nav-left,
+.nav-center,
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-center {
+    flex: 1; /* take up all available space between left and right */
+    justify-content: center; /* center nav links */
+}
+
+/*-======= LOGO==========*/
+.logo {
+    /*layout */
+    display: inline-flex; /* keep icon + text on 1 line */
+    align-items: center; /* vertically center icon + text */
+    gap: 8px; /* space between icon + fit fusion text */
+
+    /* box model */
+    padding: 4px 0; /* vertical padding */
+
+    /* typography */
+    font-size: 1.05rem;
+    font-weight: 700;
+
+    /* visual */
+    color: var(--color-text);
+
+    text-decoration: none;
+}
+
+.logo img {
+    /* box model */
+    width: 32px;
+    height: 32px;
+}
+
+/*-======= NAV LINKS (center) ==========*/
+.nav-links {
+    /* layout */
+    display: flex;
+    align-items: center;
+    gap: 42px; /* space between links */
+
+    /*reset */
+    list-style: none; /* remove bullets */
+}
+
+.nav-links a {
+    /* layout */
+    display: inline-flex;
+    align-items: center;
+
+    /*box model */
+    padding: 4px 0; /* vertical padding */
+
+    /* typography */
+    font-size: 1rem;
+    font-weight: 650;
+    
+    /* visual */
+    color: var(--color-text-muted);
+
+    /* interactions */
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* active / hover state to match neon look */
+.nav-links a:hover,
+.nav-links a:focus,
+.nav-links a[aria-current="page"] {
+    /*visual */
+    color: var(--color-accent);
+
+    /* interactions */
+    transform: translateY(-1px); /* slight lift on hover */
+}
+
+/*-=======right side button======*/
+.btn-get-started {
+    /*layout */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /*box model */
+    padding: 10px 22px; /* vertical + horizontal padding */
+    border-radius: var(--radius-pill);
+
+    /* typography */
+    font-size: 0.95rem;
+    font-weight: 700;
+
+    /* visual */
+    color: #050509;
+    background: linear-gradient(
+        135deg,
+        var(--color-accent),
+        var(--color-accent-soft)
+    );
+    box-shadow: var(--shadow-soft);
+
+    /* interactions */
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-get-started:hover {
+    transform: translateY(-1px) scale(1.02); /* slight lift and grow on hover */
+    box-shadow: 0 22px 50px rgba(0,0,0,0.75);
+}
+
+
+
+
+
+
+
+
+
+
+/*----------------===============================================-HERO SECTION -===========================================================---------*/
+
+/*------------hero wrapper---------------------*/
+.hero {
+    /*layout */
+    position: relative; /* to position elements absolutely inside */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* center horizontally */
+    text-align: center; /* center text inside */
+
+    /* box model */
+    padding-top: 6rem; /* space from navbar */
+    padding-bottom: 5rem; /* bottom padding */
+
+    /* visual */
+    overflow: visible; /* allow elements to overflow */
+}
+
+/* glowing background behind title + image */
+.hero::before {
+    content: "";
+    /* layout */
+    position: absolute;
+    inset: 0; /* top, right, bottom, left = 0 */
+    margin-inline: auto; /* center horizontally */
+
+    /* visual */
+    background:
+        radial-gradient(circle at center,
+            rgba(155,214,0,0.4) 0%,
+            rgba(5,5,9,0.4) 45%,
+            #050509 80%);
+    opacity: 0.9;
+    z-index: -1; /* place behind hero content */;
+}
+
+/* -------hero title--------- */
+.hero-title {
+    /*layout */
+    max-width: 900px;
+
+    /*box model*/
+    margin-bottom: 3rem;
+
+    /* typography */
+    font-size: clamp(3rem, 6vw, 4.8rem); /* responsive font size between 3rem and 4.8rem based on viewport width */
+    line-height: 1.04;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.06rem;
+
+    /* visual */
+    color: var(--color-text);   
+}
+/* make "your" in neon */
+.hero-highlight {
+    color: var(--color-accent);
+}
+
+/* ------hero media + overlay stats------- */
+.hero-media {
+    /*layout */
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    /*box model */
+    width: 70%;
+    margin-bottom: 0.5rem;
+}
+
+.hero-image-wrapper {
+    /*layout */
+    position: relative;
+
+    /* box model */
+    width: min(780px, 100%); /* max width 780px , shrink on smaller screens */
+    border-radius: var(--radius-lg); 
+    overflow: visible; /* clip overflow for rounded corners */
+
+    /* visual */
+    box-shadow: 0 -50px 80px rgba(155,214,0,0.3);
+}
+
+.hero-image {
+    /* box model */
+    width: 100%;
+    height: auto; /* maintain aspect ratio */
+
+    /* visual */
+    object-fit: cover; /* cover the container */
+}
+
+/* -------hero stats (overlaid on image)------- */
+.hero-stat {
+    /*layout */
+    position: absolute; /* position relative to hero-image-wrapper */
+    align-items: center;
+    gap: 12px;
+
+    /* box model */
+    padding: 10px 18px;
+    border-radius: var(--radius-md);
+
+    /* visual */
+    background: #050a14;
+    box-shadow: 0 0px 30px rgba(155,214,0,0.2);
+    color: var(--color-text);
+}
+
+.hero-stat .stat-label {
+    /* typography */
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12rem;
+
+    /* visual */
+    color: var(--color-text-muted);
+}
+
+.hero-stat .stat-value {
+    /* typography */
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+/* position individual stats */
+.hero-stat-sleep {
+    top: 90px;
+    right: -7%
+}
+.hero-stat-calories {
+    top: 30px;
+    left:-10%
+}
+.hero-stat-heart {
+    bottom: 50px;
+    right: -20px;
+}
+
+.hero-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* align to left */
+    gap: 12px;
+    width: fit-content;
+    margin-inline: auto;
+}
+/*----hero clients --*/
+.hero-clients {
+    /*layout */
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin: 0;
+    text-align: left;
+    
+
+    /* box model */
+    padding: 10px 18px;
+    border-radius: var(--radius-pill);
+    margin-top: 0.5rem;
+
+    /* visual */
+    background: #151619;
+}
+
+.hero-clients-number {
+    /* typography */
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    color: var(--color-text);
+}
+
+.hero-clients-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+
+    color: var(--color-text-muted);
+}
