@@ -278,7 +278,108 @@ section {
     box-shadow: 0 22px 50px rgba(0,0,0,0.75);
 }
 
+/* ------------------------------hide mobile navbar toggle on desktop----------------- */
+.nav-toggle {
+    display: none;
+}
 
+.nav-cta-mobile {
+    display: none;
+}
+
+/* hamburger lines */
+.nav-toggle-line {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 999px;
+    background-color: #fff;
+}
+
+/*------------------MOBILE NAV ---------*/
+@media (max-width: 768px) {
+    .navbar {
+        position: relative;
+        /* make sure content under rit stays below */
+        z-index: 20;
+    }
+
+
+    .navbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-inline: var(--section-padding-x);
+        padding-block: 0.75rem;
+    }
+
+    /*show hamburger, hide desktop CTA */
+    .nav-toggle {
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        width: 32px;
+        border-radius: 32px;
+        border: transparent;
+        background: rgba(0,0,0,0.6);
+        cursor: pointer;
+    }
+
+    .nav-cta-desktop {
+        display: none;
+    }
+
+    /*mobile dropdown panel */
+    .nav-center {
+        position: absolute;
+        top:100%;
+        left: 0;
+        right: 0;
+        background: #000;
+        padding: 1.75rem var(--page-padding-x) 2rem;
+        display: none;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
+        font-size: 1rem;;
+    }
+
+    .nav-links a {
+        color: #fff;
+    }
+
+    .nav-cta-mobile {
+        display: block;
+        margin-top: 2.25rem;
+        width: 100%;
+        text-align: center;
+        padding-block: 0.9rem;
+        border-radius: var(--radius-pill);
+        background-color: var(--color-accent);
+        color:#000;
+        font-weight: 600;
+    }
+
+    /* when menu is open */
+    .navbar-open .nav-center {
+        display: block;
+    }
+
+    /* transform hamburger into X */
+    .navbar-open .nav-toggle-line:nth-child(1) {
+        transform: translateY(4px) rotate(45deg);
+    }
+    .navbar-open .nav-toggle-line:nth-child(2) {
+        opacity: 0;
+    }
+    .navbar-open .nav-toggle-line:nth-child(3) {
+        transform: translateY(-4px) rotate(-45deg);
+    }
+}
 
 
 
@@ -623,14 +724,14 @@ section {
 
 
 
-/*-----=======================================================TESTIMONIALS =========================================================*/
+/*-----==========================================================================TESTIMONIALS ==============================================================*/
 
 .testimonials {
     /*layout */
     position: relative;
 
     /*box model */
-    padding-block: var(--section-padding-y);
+    padding-block: var(--section-padding-y); /* padding-block= padding top and bottom inside the block so 5rem padding top and bottom inside */
 
     /* visual */
     background-color: transparent;
@@ -642,7 +743,7 @@ section {
     max-width: 900px;
 
     /*box model*/
-    margin: 0 auto 3rem auto;
+    margin: 0 auto 3rem auto;   /*  top 0, right auto, bottom 3rem, left auto, so auto left right means = center this block horizontally inside its parent */
 
     /* typography*/
     text-align: center;
@@ -658,23 +759,29 @@ section {
     /*layout*/
     position: relative;
 
+    left: 50%; /* Shift this element to the right by 50% of its containing block’s width. Move the scroller so its left edge starts at the middle of the container.*/
+    width: 100vw;  /* vw= viewport, 100% of the browser window width, not the container width, Make this element as wide as the entire screen, ignoring the 1120px container limit.*/
+    margin-left: -50vw; /* Shift it back to the left by half its width (50vw).Net result: The element is centered on the screen*/
+
     /*box model */
-    width: 100%;
-    overflow: hidden; /* important!! hide overflow , no manual scrolling! */
     padding-block: 4px; /* 4px padding below the cards and the title below it! */
-    margin-top: 1.5rem; /* padding between the title and the cards */
+    margin-top: 1.5rem; /* padding between the title and the cards  so margin is outside the element and padding is inside */
+
+    /*visual*/
+    overflow: hidden; /* important!! hide overflow , no manual scrolling! */
 }
+
 
 /* row of cards that slides from right to left */
 .testimonials-track {
     /*layout */
     display: flex;
-    align-items: stretch;
+    align-items: stretch; /* make all cards the same height */
     gap: 24px;
-    width: max-content;
+    width: max-content; /* not 100* because the width needs to be bigger then the viewport. if each card is 320px and i have 6 cards : 6 x 320 = 1920px wide which is bigger then the viewport so that's why it needs to fit max-content */
 
     /* animation */
-    animation: testimonials-marquee 35s linear infinite;
+    animation: testimonials-marquee 35s linear infinite; /* take 35s to go from 0% to 100% (speed), linear= constant speed / infinite= when the animation ends , start again */
 }
 
 /* pause animation when hovering any card */
@@ -697,13 +804,13 @@ section {
 /* individual testimonial cards */
 .testimonial-card {
     /*layout */
-    flex: 0 0 320px; /* fixes card width */
+    flex: 0 0 320px; /* flew-grow= 0 (the card will NOT grow!/ flex-shrink= 0 (the card will NOT shrink/ flex-basis= 320px( my width is 320px and it will always be like this and never change)*/
     display: flex;
     flex-direction: column;
     height: 360px; /* fixed card height so all cards stay equal */
 
     /*box model */
-    padding: 18px 18px 16px;
+    padding: 18px 18px 16px; /* top 18px , left and right 18px and bottom 16px */
     border-radius: var(--radius-lg);
 
     /*visual*/
@@ -732,7 +839,7 @@ section {
 
 .testimonial-avatar {
     /*layout */
-    flex-shrink: 0;
+    flex-shrink: 0; /* if the container becomes too small( screen smaller) the avatar is NOT allowed to shrink ! shrink 0 = not allowed to shrink / shrink 1= allowed to shrink */
 
     /*box model */
     width: 48px;
@@ -752,7 +859,7 @@ section {
 }
 
 .testimonial-quote-icon {
-    font-family: Georgia, serif;
+    font-family: Georgia, serif; /* first try Georgia , if the device does not have it , use nay serif font the system thinks is best */
     font-size: 60px;
     font-weight: 900;
     color: #95a553;
@@ -762,7 +869,7 @@ section {
 
 
 .testimonial-text {
-    margin: 0;
+    margin: 0;     /* removes the default browsers paddings etc */
     font-size: 0.9rem;
     line-height: 1.3;
     font-style: italic;
@@ -779,10 +886,10 @@ section {
 }
 
 .testimonial-card hr {
-    border: 0;
+    border: 0;  /* This removes all borders on the hr element:*/
     border-top: 1px solid #242020;
     margin: 12px 0 10px;
-    margin-top: auto; /* push divider to the bottom */
+    margin-top: auto; /* want the <hr> to sit at the bottom, right above the footer, regardless of how long or short the text is.*/
 }
 
 .testimonial-name {
@@ -792,3 +899,238 @@ section {
     color: #d4d5e6;
 }
 
+
+
+/* -===============================================================NEWSLETTER ===========================================================================*/
+
+.newsletter {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    
+    
+    
+    border-radius: var(--radius-lg);
+
+    background-color: var(--color-accent);
+    color:#000;
+    background-image: radial-gradient(
+        rgba(0,0,0,0.08) 1px,
+        transparent 1px
+    );                                  /* this creates dots all over the background*/
+    background-size: 18px 18px;
+
+
+}
+
+.newsletter-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+
+    
+}
+
+.newsletter-title {
+    /*box model*/
+    margin-bottom: 0.75rem;
+
+    font-size: clamp(2rem, 6vw, 2.5rem);
+    font-weight: 1000;
+    line-height: 1.1;
+    letter-spacing: 0.08rem;
+    text-transform: uppercase;
+}
+
+.newsletter-subtitle {
+    
+    margin-bottom: 1.5rem;
+    
+    
+    font-weight: 500;
+    font-size: 0.8rem;
+    color: var(--color-border);
+}
+
+.newsletter-form {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    
+}
+
+.newsletter-input {
+    min-width: 35vw;
+    padding: 0.9rem 3rem;
+
+    border-radius: 24px;
+    border: none;
+    box-shadow: var(--shadow-subtle);
+
+    background-color: #efeff4;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #060606;
+}
+
+.newsletter-input::placeholder {
+    color: rgba(0,0,0,0.5);
+}
+
+.newsletter-input:focus-visible {
+    outline: 1px solid #000;       /* the element has focus and the browser decided the focus should be visibly shown. */
+}
+.newsletter-button {
+    padding: 0.9rem 1.6rem;
+    border-radius: 999px;
+    border: none;
+
+    color: #ffffff;
+    background-color: #000;
+    box-shadow: var(--shadow-subtle);
+
+    transition: 0.3s ease, box-shadow 0.3s ease;
+}
+
+.newsletter-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 640px) {
+    .newsletter-inner {
+        border-radius: 24px;
+        padding: 2rem 1.25rem;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+    }
+}
+
+
+
+
+/* -=======================================================================FOOTER ==================================================================================*/
+
+.footer {
+    padding: 2rem 2rem 2rem 2rem;
+    padding-block: 2rem; /* vertical spacing */
+    border-top: 1px solid #121318;
+    margin-top: 4rem;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+/* left column: brand + name*/
+.brand-logo {
+    display: flex;
+    align-items:center;
+    gap: 0.2rem;
+    margin-bottom: 1rem
+}
+.footer-brand-logo {
+    width: 38px;
+    height: auto;
+}
+
+.footer-brand-text {
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.footer-description {
+    max-width: 320px;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.1;
+}
+
+.footer-social {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer-heading {
+    font-size: 1rem;
+}
+
+.footer-social-list {
+    display: flex;
+
+}
+
+.social-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    opacity: 0.8;
+    
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.social-link:hover .social-icon {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.footer-links {
+    display: flex;
+    gap: 3rem;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.footer-list {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem
+}
+
+.footer-list a {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    transition:  0.3s ease;
+}
+
+.footer-list a:hover {
+    transform: scale(1.1);
+    color: var(--color-accent);
+}
+
+@media (max-width: 640px) {
+    .footer-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 3rem;
+    flex-wrap: wrap;
+    }
+}
+
+.footer-bottom {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #121419;
+    text-align: left;
+}
+
+.footer-bottom {
+    font-size: 0.65rem;
+    color: var(--color-text-muted);
+}
