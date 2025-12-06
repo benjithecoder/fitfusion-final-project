@@ -294,13 +294,18 @@ section {
     height: 2px;
     border-radius: 999px;
     background-color: #fff;
+
+    transition: 0.3s ease;
+
+    /*make the cross lines cross in the center to make a perfect cross */
+    transform-origin: center;
 }
 
 /*------------------MOBILE NAV ---------*/
 @media (max-width: 768px) {
     .navbar {
         position: relative;
-        /* make sure content under rit stays below */
+        /* make sure content under it stays below */
         z-index: 20;
     }
 
@@ -330,7 +335,7 @@ section {
         display: none;
     }
 
-    /*mobile dropdown panel */
+    /* mobile dropdown panel */
     .nav-center {
         position: absolute;
         top:100%;
@@ -371,13 +376,13 @@ section {
 
     /* transform hamburger into X */
     .navbar-open .nav-toggle-line:nth-child(1) {
-        transform: translateY(4px) rotate(45deg);
+        transform: translateY(6px) rotate(45deg);
     }
     .navbar-open .nav-toggle-line:nth-child(2) {
         opacity: 0;
     }
     .navbar-open .nav-toggle-line:nth-child(3) {
-        transform: translateY(-4px) rotate(-45deg);
+        transform: translateY(-6px) rotate(-45deg);
     }
 }
 
@@ -1133,4 +1138,324 @@ section {
 .footer-bottom {
     font-size: 0.65rem;
     color: var(--color-text-muted);
+}
+
+
+
+
+
+
+
+/*-=============================EXERCISE DETAIL PAGE (LEG SQUAD)==================================================*/
+
+.exercise-body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-main);
+    min-height: 100vh; /* sets the element’s minimum height to 100% of the viewport height. like basically as tall as the visible browser window */ 
+}
+
+/* header / nav bar */
+.exercise-header {
+    padding: 1.2rem 1.2rem 0;
+}
+
+.exercise-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.exercise-back-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-pill);
+    border: none;
+    background: rgba(37, 37, 37, 0.7);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.exercise-back-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+    color: var(--color-accent)
+}
+
+.exercise-title-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.exercise-title {
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
+    letter-spacing: 0.04rem;
+    font-weight: 700;
+}
+
+.exercise-equipment {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+}
+
+/* main layout */
+.exercise-main {
+    padding: 2rem 1.2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* stage card ( big grid background pane ) */
+.exercise-stage {
+    position: relative;
+    border-radius: var(--radius-lg);
+    padding: 2rem 2.5rem 0;
+    background:
+        radial-gradient(circle at center, rgba(35, 73, 28, 0.09), transparent 90%),
+        linear-gradient(180deg, #0e1e0d, #0a0f0a);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    min-height: clamp(18rem, 45vh, 26rem);
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+    justify-content: center;
+}
+
+/*subtle grid overlay */
+.exercise-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(32, 42, 24, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04)1px, transparent 1px);
+    background-size: 42px 42px;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* target muscle label */
+.exercise-target {
+    position: absolute;
+    left: 1.2rem;
+    bottom: 1rem;
+    z-index: 2;
+}
+
+.exercise-target-label {
+    display: inline-block;
+    padding: 0.25rem 0.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-accent);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: 0.4rem;
+}
+
+.exercise-target-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: -0.1rem;
+}
+
+/* exercise image */
+.exercise-figure {
+    position: relative;
+    display: flex;
+    counter-reset: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    margin: 0;
+    padding: 1.25rem 0 2.75rem;
+    
+}
+
+.exercise-image {
+    display: block;
+    max-width: min(420px, 80vw);
+    height: auto;
+    border-radius: 18px;
+}
+
+video {
+    width: 100%;
+    height: auto;
+    max-width: 420px;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+}
+/* tabs bar */ 
+
+.exercise-tabs {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin-inline: -2.5rem;
+    padding-top: 0.75rem;
+}
+
+.slighting-about,
+.slighting-guide {
+    display: flex;
+    justify-content: center;
+}
+
+.exercise-tab {
+    position: relative;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.65);
+    cursor: pointer;
+}
+
+.exercise-tab.is-active {
+    color: var(--color-text)
+}
+
+.exercise-tab::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -0.7rem;
+
+    width: 0;
+    height: 3px;
+    background-color: var(--color-accent);
+    border-radius: 2px;
+    opacity: 0;
+
+    transition: 0.25s ease-out,
+    opacity 0.25s ease-out;
+}
+
+/*underline when active*/
+.exercise-tab.is-active::after {
+    width: 6rem;
+    opacity: 1;
+}
+/* panels (about/ guide)*/
+
+.exercise-panel {
+    padding: 1.4rem 1.75rem 1.6rem;
+}
+
+.exercise-description {
+    font-size: 0.95rem;
+    line-height: 1.6rem;
+    margin-bottom: 1.4rem;
+    color: rgba(255,255,255,0.8);
+}
+
+/* primary and secondary card */
+.exercise-muscle-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.exercise-muscle-card {
+    border-radius: 16px;
+    padding: 0.85rem 1rem;
+    background: linear-gradient(145deg, #1d1d1d, #131313);
+}
+
+.exercise-muscle-heading {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+.exercise-muscle-text {
+    font-size: 0.80rem;
+    color: var(--color-text-muted);
+}
+
+/* guide steps */
+
+.exercise-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2rem;
+}
+
+.exercise-step {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.exercise-step-index {
+    width: 1.6rem;
+    height: 1.6rem;
+    aspect-ratio: 1 / 1; /* keep the circle a perfect circle on smaller screen */
+    border-radius: 50%;
+    border: 1px solid var(--color-accent-soft);
+
+    display: flex;
+    place-items: center;
+    justify-content: center;
+
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.exercise-step-text {
+    font-size: 0.9rem;
+    line-height: 1.45rem;;
+    color: rgba(255,255,255,0.82);
+}
+
+@media (max-width: 768px) {
+    .exercise-header {
+        padding-inline: 1.25rem;
+    }
+
+    .exercise-main {
+        padding: 1.25rem;
+        gap: 1.25rem;
+    }
+
+   .exercise-target { 
+    right: 1.5rem;
+    bottom: 1rem;
+   }
+
+   .exercise-target-label {
+    font-size: 0.5rem;
+   }
+
+   .exercise-target-name {
+    font-size: 0.7rem;
+   }
+
+   .exercise-tabs {
+    gap: 2.5rem;
+    margin-inline: -1.5rem;
+   }
+
+   .exercise-panel {
+    padding-inline: 1.25rem;
+   }
+
+   .exercise-muscle-cards {
+    grid-template-columns: minmax(0, 1fr);
+   }
+    
 }
