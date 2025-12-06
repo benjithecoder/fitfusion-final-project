@@ -1295,11 +1295,13 @@ video {
 /* tabs bar */ 
 
 .exercise-tabs {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    gap: 4rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: space-between;
+    padding-inline: 1.5rem;
+    gap: 2.5rem;
+
     border-top: 1px solid rgba(255,255,255,0.08);
     margin-inline: -2.5rem;
     padding-top: 0.75rem;
@@ -1309,6 +1311,7 @@ video {
 .slighting-guide {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .exercise-tab {
@@ -1345,7 +1348,7 @@ video {
 
 /*underline when active*/
 .exercise-tab.is-active::after {
-    width: 6rem;
+    width: 35rem;
     opacity: 1;
 }
 /* panels (about/ guide)*/
@@ -1457,5 +1460,10 @@ video {
    .exercise-muscle-cards {
     grid-template-columns: minmax(0, 1fr);
    }
+
+   .exercise-tab.is-active::after {
+    width: 8rem;
+    opacity: 1;
+    }
     
 }

@@ -6,7 +6,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     />
-    <title>back squat - FitFusion</title>
+    <title>Chest - FitFusion</title>
 
     <!-- reuse main stylesheet -->
      <link rel="stylesheet" href="styles/style.css" />
@@ -22,7 +22,7 @@
             </a>
 
             <div class="exercise-title-block">
-                <h1 class="exercise-title">BACK SQUAT</h1>
+                <h1 class="exercise-title">BENCH PRESS</h1>
                 <p class="exercise-equipment">Barbell</p>
             </div>
         </nav>
@@ -34,7 +34,7 @@
             <!--target muscle label-->
             <div class="exercise-target">
                 <p class="exercise-target-label">Target Muscle</p>
-                <p class="exercise-target-name">QUADRICEPS</p>
+                <p class="exercise-target-name">PECTORALS</p>
             </div>
 
 
@@ -60,8 +60,9 @@
                     role="tab"
                     aria-selected="true"
                     aria-controls="exercise-about"
-                    id="exercise-tab-about"> <!-- It stores the value about on that element so your JavaScript can read it via element.dataset.tab-->
-                About</button>
+                    id="exercise-tab-about"
+                    data-tab="about"
+                >About</button>
             </div>
             <div class="slighting-guide">
                 <button
@@ -86,20 +87,19 @@
             data-tab-panel="about"
         >
             <p class="exercise-description">
-                The Barbell Back Squat is a compound exercise that primarily targets the quadriceps,
-                glutes, and hamstrings. It is often referred to as the "king of all exercises" due to
-                its ability to build lower body strength and power.
+                The Bench Press is a classic compound exercise for building upper body strength and muscle mass. 
+                It primarily works the chest muscles, anterior deltoids, and triceps.
             </p>
 
             <div class="exercise-muscle-cards">
                 <article class="exercise-muscle-card">
                     <h2 class="exercise-muscle-heading">Primary</h2>
-                    <p class="exercise-muscle-text">Quadriceps, Glutes</p>
+                    <p class="exercise-muscle-text">Pectorals</p>
                 </article>
 
                 <article class="exercise-muscle-card">
                     <h2 class="exercise-muscle-heading">Secondary</h2>
-                    <p class="exercise-muscle-text">Hamstrings, Core</p>
+                    <p class="exercise-muscle-text">Triceps, Front Delts</p>
                 </article>
             </div>
         </section>
@@ -117,19 +117,23 @@
             <ol class="exercise-steps">
                 <li class="exercise-step">
                     <span class="exercise-step-index">1</span>
-                    <p class="exercise-step-text">Position bar on your traps.</p>
+                    <p class="exercise-step-text">Lie back on bench, eyes under the bar.</p>
                 </li>
                 <li class="exercise-step">
                     <span class="exercise-step-index">2</span>
-                    <p class="exercise-step-text">Step back and set feet shoulder-width.</p>
+                    <p class="exercise-step-text">Grip bar slightly wider than shoulders.</p>
                 </li>
                 <li class="exercise-step">
                     <span class="exercise-step-index">3</span>
-                    <p class="exercise-step-text">Lower into a squat, keeping chest up.</p>
+                    <p class="exercise-step-text">Unrack and lower bar to mid-chest.</p>
                 </li>
                 <li class="exercise-step">
                     <span class="exercise-step-index">4</span>
-                    <p class="exercise-step-text">Drive through heels and stand tall</p>
+                    <p class="exercise-step-text">Press bar up until arms are extended.</p>
+                </li>
+                <li class="exercise-step">
+                    <span class="exercise-step-index">5</span>
+                    <p class="exercise-step-text">Keep feet planted and core tight throughout.</p>
                 </li>
             </ol>
         </section>
