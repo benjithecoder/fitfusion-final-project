@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+    <title>Arms - FitFusion</title>
+
+    <!-- reuse main stylesheet -->
+     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+
+<body class="exercise-body">
+    <header class="exercise-header">
+        <nav class="exercise-nav">
+            <a href="index.html#programs" class="exercise-back-button" aria-label="Back to programs">
+                <span class="exercise-back-icon">←</span>
+            </a>
+
+            <div class=""exercise-title-block>
+                <h1 class="exercise-title">BICEPS CURLS</h1>
+                <p class="exercise-equipment">Dumbbells</p>
+            </div>
+        </nav>
+    </header>
+
+    <main class="exercise-main">
+        <section class="exercise-stage">
+            <div class="exercise-target">
+                <p class="exercise-target-label">Target Muscle</p>
+                <p class="exercise-target-name">BICEPS BRACHII</p>
+            </div>
+        
+
+            <figure class="exercise-figure">
+                <video
+                    src="{{ url_for('static', filename='assets/videos/back-squat.mp4') }}"
+                    class="exercise-video"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                ></video>
+            </figure>
+        </section>
+
+        <div class="exercise-tabs" role="tablist" aria-label="Exercise information">
+            <div class="slighting-about">
+                <button
+                    class="exercise-tab is-active"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="exercise-about"
+                    id="exercise-tab-about"
+                    data-tab="about">
+                About</button>
+            </div>
+
+            <div class="slighting-guide">
+                <button
+                    class="exercise-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="exercise-guide"
+                    id="exercise-tab-guide"
+                    data-tab="guide">
+                Guide</button>
+            </div>
+        </div>
+
+        <section
+            class="exercise-panel exercise-panel--about is-active"
+            id="exercise-about"
+            aria-labelledby="exercise-tab-about"
+            data-tab-panel="about"
+        >
+            <p class="exercise-description">
+                Bicep Curls are an isolation exercise that targets the biceps brachii. 
+                Essential for building arm size and strength, they can be performed with dumbbells, 
+                barbells, or cables.
+            </p>
+        
+            <div class="exercise-muscle-cards">
+                <article class="exercise-muscle-card">
+                    <h2 class="exercise-muscle-heading">Pimary</h2>
+                    <p class="exercise-muscle-text">Biceps Brachii</p>
+                </article>
+
+                <article class="exercise-muscle-card">
+                    <h2 class="exercise-muscle-heading">Secondary</h2>
+                    <p class="exercise-muscle-text">Brachialis, Forearms</p>
+                </article>
+            </div>
+        </section>
+
+        <section
+            class="exercise-panel exercise-panel--guide"
+            id="exercise-guide"
+            aria-labelledby="exercise-tab-guide"
+            data-tab-panel="guide"
+            hidden
+        >
+            
+            <ol class="exercise-steps">
+                <li class="exercise-step">
+                    <span class="exercise-step-index">1</span>
+                    <p class="exercise-step-text">Stand tall holding dumbbells at sides.</p>
+                </li>
+                <li class="exercise-step">
+                    <span class="exercise-step-index">2</span>
+                    <p class="exercise-step-text">Keep elbows close to your torso.</p>
+                </li>
+                <li class="exercise-step">
+                    <span class="exercise-step-index">3</span>
+                    <p class="exercise-step-text">Curl the weights up towards shoulders.</p>
+                </li>
+                <li class="exercise-step">
+                    <span class="exercise-step-index">4</span>
+                    <p class="exercise-step-text">Squeeze biceps at the top of movement.</p>
+                </li>
+                <li class="exercise-step">
+                    <span class="exercise-step-index">5</span>
+                    <p class="exercise-step-text">Lower weights slowly with control.</p>
+                </li>
+            </ol>
+        </section>
+    </main>
+
+    <!-- our main javascript file (for interactions & animations)-->
+    <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+
+</body>
+</html>

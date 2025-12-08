@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+
 // -------------------------EXERCISE DETAIL TABS ABOUT/GUIDE-------------------------
 
 const exerciseTabs = document.querySelectorAll(".exercise-tab");

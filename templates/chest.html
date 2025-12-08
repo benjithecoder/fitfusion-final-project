@@ -9,7 +9,7 @@
     <title>Chest - FitFusion</title>
 
     <!-- reuse main stylesheet -->
-     <link rel="stylesheet" href="styles/style.css" />
+     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
 </head>
 
 <body class="exercise-body">
@@ -42,7 +42,7 @@
             <figure class="exercise-figure">
                 <video
                     class="exercise-video"
-                    src="assets/videos/back-squat.mp4"
+                    src="{{ url_for('static', filename='assets/videos/back-squat.mp4') }}"
                     autoplay
                     muted
                     loop
@@ -141,7 +141,7 @@
 
 
     <!-- our main javascript file (for interactions & animations)-->
-    <script src="scripts/main.js"></script>
+    <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
 </body>
 </html>
 

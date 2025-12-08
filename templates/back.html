@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+    <title>back - FitFusion</title>
+
+    <!-- reuse main stylesheet -->
+     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+
+<body class="exercise-body">
+    <header class="exercise-header">
+        <nav class="exercise-nav">
+            <a href="index.html#programs" class="exercise-back-button" aria-label="back to programs">
+                <span class="exercise-back-icon">←</span>
+            </a>
+
+            <div class="exercise-title-block">
+                <h1 class="exercise-title">LAT PULLDOWN</h1>
+                <p class="exercise-equipment">Cable Machine</p>
+            </div>
+        </nav>
+    </header>
+
+    <main class="exercise-main">
+        <section class="exercise-stage">
+            <div class="exercise-target">
+                <p class="exercise-target-label">Target Muscle</p>
+                <p class="exercise-target-name">LATISSIMUS DORSI</p>
+            </div>
+
+            <figure class="exercise-figure">
+                <video
+                    class="exercise-video"
+                    src="{{ url_for('static', filename='assets/videos/back-squat.mp4') }}"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                ></video>
+            </figure>
+        </section>
+
+        <div class="exercise-tabs" role="tablist" aria-label="Exercise information">
+            <div class="slighting-about">
+                <button
+                    class="exercise-tab is-active"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="exercise-about"
+                    id="exercise-tab-about"
+                    data-tab="about">
+                About</button>
+            </div>
+
+            <div class="slighting-guide">
+                <button
+                    class="exercise-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="exercise-guide"
+                    id="exercise-tab-guide"
+                    data-tab="guide"
+                >Guide</button>
+            </div>
+        </div>
+
+        <section
+            id="exercise-about"
+            class="exercise-panel exercise-panel--about is-active"
+            role="tabpanel"
+            aria-labelledby="exercise-tab-about"
+            data-tab-panel="about"
+        >
+            <p class="exercise-description">
+                The Lat Pulldown is a fantastic exercise for developing a wide back. It targets the latissimus dorsi, 
+                the largest muscle in the back, 
+                helping to create that desired V-taper look.
+            </p>
+
+            <div class="exercise-muscle-cards">
+                <article class="exercise-muscle-card">
+                    <h2 class="exercise-muscle-heading">Primary</h2>
+                    <p class="exercise-muscle-text">Latissimus Dorsi</p>
+                </article>
+
+                <article class="exercise-muscle-card">
+                    <h2 class="exercise-muscle-heading">Secondary</h2>
+                    <p class="exercise-muscle-text">Biceps, Rear Delts</p>
+                </article>
+            </div>
+        </section>
+
+        <section
+            id="exercise-guide"
+            class="exercise-panel exercise-panel--guide"
+            role="tabpanel"
+            aria-labelledby="exercise-tab-guide"
+            data-tab-panel="guide"
+            hidden
+        >
+            <ol class="exercise-steps">
+                <li class="exercise-step">
+                    <span class="exercise-step-index">1</span>
+                    <p class="exercise-step-text">Adjust knee pad to secure your legs.</p>
+                </li>
+                <li class="exercise-step">
+                    <span class="exercise-step-index">2</span>
+                    <p class="exercise-step-text">Grip the bar wider than shoulder-width.</p>
+                </li>
+                <li class="exercise-step">
+                    <span class="exercise-step-index">3</span>
+                    <p class="exercise-step-text">Pull the bar down to your upper chest.</p>
+                </li>
+                <li class="exercise-step">
+                    <span class="exercise-step-index">4</span>
+                    <p class="exercise-step-text">Squeeze your shoulder blades together.</p>
+                </li>
+                <li class="exercise-step">
+                    <span class="exercise-step-index">5</span>
+                    <p class="exercise-step-text">Slowly return the bar to starting position.</p>
+                </li>
+            </ol>
+        </section>
+    </main>
+
+    <!-- our main javascript file (for interactions & animations)-->
+    <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+</body>
+</html>

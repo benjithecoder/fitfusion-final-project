@@ -6,46 +6,53 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     />
-    <title>back - FitFusion</title>
+    <title>Triceps - FitFusion</title>
 
     <!-- reuse main stylesheet -->
-     <link rel="stylesheet" href="styles/style.css" />
+     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
 </head>
 
 <body class="exercise-body">
+    <!--top header: back button + exercise title--> 
     <header class="exercise-header">
         <nav class="exercise-nav">
-            <a href="index.html#programs" class="exercise-back-button" aria-label="back to programs">
+            <!--back arrow sends user back to programs on the home page-->
+            <a href="index.html#programs" class="exercise-back-button" aria-label="Back to programs">
                 <span class="exercise-back-icon">←</span>
             </a>
 
             <div class="exercise-title-block">
-                <h1 class="exercise-title">LAT PULLDOWN</h1>
+                <h1 class="exercise-title">TRICEPS PUSHDOWN</h1>
                 <p class="exercise-equipment">Cable Machine</p>
             </div>
         </nav>
     </header>
 
     <main class="exercise-main">
+        <!--main visual card (grid background + image + tabs)-->
         <section class="exercise-stage">
+            <!--target muscle label-->
             <div class="exercise-target">
                 <p class="exercise-target-label">Target Muscle</p>
-                <p class="exercise-target-name">LATISSIMUS DORSI</p>
+                <p class="exercise-target-name">TRICEPS BRACHII</p>
             </div>
 
+
+            <!-- exercise image -->
             <figure class="exercise-figure">
                 <video
                     class="exercise-video"
-                    src="assets/videos/back-squat.mp4"
+                    src="{{ url_for('static', filename='assets/videos/back-squat.mp4') }}"
                     autoplay
                     muted
                     loop
                     playsinline
-                >
+                ></video>
             </figure>
         </section>
 
-        <div class="exercise-tabs" role="tablist" aria-label="Exercise information">
+        <!--tabs bar (about / guide ) pinned to bottom of stage-->
+        <div class="exercise-tabs" role="tablist" aria-label="Exercise information"> <!-- role is only for screen readers -->
             <div class="slighting-about">
                 <button
                     class="exercise-tab is-active"
@@ -54,23 +61,24 @@
                     aria-selected="true"
                     aria-controls="exercise-about"
                     id="exercise-tab-about"
-                    data-tab="about">About
-                </button>
-
-                <div class="slighting-guide">
-                    <button
-                        class="exercise-tab is-active"
-                        type="button"
-                        role="tab"
-                        aria-selected="true"
-                        aria-controls="exercise-about"
-                        id="exercise-tab-about"
-                        data-tab="about"
-                    >Guide</button>
-                </div>
+                    data-tab="about"
+                >About</button>
+            </div>
+            <div class="slighting-guide">
+                <button
+                    class="exercise-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="exercise-guide"
+                    id="exercise-tab-guide"
+                    data-tab="guide"
+                >Guide</button>
             </div>
         </div>
+        
 
+        <!--about panel-->
         <section
             id="exercise-about"
             class="exercise-panel exercise-panel--about is-active"
@@ -79,54 +87,61 @@
             data-tab-panel="about"
         >
             <p class="exercise-description">
-                The Lat Pulldown is a fantastic exercise for developing a wide back. It targets the latissimus dorsi, 
-                the largest muscle in the back, 
-                helping to create that desired V-taper look.
+                Triceps Pushdowns are one of the most effective exercises for isolating the triceps. 
+                Since the triceps make up two-thirds of the upper arm, this exercise is key for arm size.
             </p>
 
             <div class="exercise-muscle-cards">
                 <article class="exercise-muscle-card">
                     <h2 class="exercise-muscle-heading">Primary</h2>
-                    <p class="exercise-muscle-text">Latissimus Dorsi</p>
+                    <p class="exercise-muscle-text">Triceps Brachii</p>
                 </article>
 
-                <article class="exercise-muscle-cards">
+                <article class="exercise-muscle-card">
                     <h2 class="exercise-muscle-heading">Secondary</h2>
-                    <p class="exercise-muscle-text">Biceps, Rear Delts</p>
+                    <p class="exercise-muscle-text">Anconeus</p>
                 </article>
             </div>
         </section>
+        
 
+        <!--Guide panel-->
         <section
             id="exercise-guide"
             class="exercise-panel exercise-panel--guide"
             role="tabpanel"
-            aria-labelledby="exercise-tab-about"
+            aria-labelledby="exercise-tab-guide"
             data-tab-panel="guide"
             hidden
         >
             <ol class="exercise-steps">
                 <li class="exercise-step">
                     <span class="exercise-step-index">1</span>
-                    <p class="exercise-step-text">Adjust knee pad to secure your legs.</p>
+                    <p class="exercise-step-text">Attach rope or bar to high pulley.</p>
                 </li>
                 <li class="exercise-step">
                     <span class="exercise-step-index">2</span>
-                    <p class="exercise-step-text">Grip the bar wider than shoulder-width.</p>
+                    <p class="exercise-step-text">Keep elbows pinned to your sides.</p>
                 </li>
                 <li class="exercise-step">
                     <span class="exercise-step-index">3</span>
-                    <p class="exercise-step-text">Pull the bar down to your upper chest.</p>
+                    <p class="exercise-step-text">Push down until arms are fully extended.</p>
                 </li>
                 <li class="exercise-step">
                     <span class="exercise-step-index">4</span>
-                    <p class="exercise-step-text">Squeeze your shoulder blades together.</p>
+                    <p class="exercise-step-text">Squeeze triceps hard at the bottom.</p>
                 </li>
                 <li class="exercise-step">
                     <span class="exercise-step-index">5</span>
-                    <p class="exercise-step-text">Slowly return the bar to starting position.</p>
+                    <p class="exercise-step-text">Return slowly to starting position.</p>
                 </li>
             </ol>
         </section>
     </main>
+
+
+    <!-- our main javascript file (for interactions & animations)-->
+    <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
 </body>
+</html>
+

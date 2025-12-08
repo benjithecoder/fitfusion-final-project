@@ -12,7 +12,7 @@
     <title>FitFusion – Fitness Landing Page</title>
 
     <!-- Link to our main stylesheet (we’ll style everything here later) -->
-    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
 </head>
 <body>
     <!-- site header: logo + navigation will live here-->
@@ -22,7 +22,7 @@
                 <!-- Left side: Logo -->
                 <div class="nav-left">
                     <a href="#home" class="logo">
-                        <img src="assets/icons/Pasted graphic 2.png" alt="FitFusion logo"/>  <!--Instead of a missing/broken icon, the browser shows the alt text(fit fusion logo).-->
+                        <img src="{{ url_for('static', filename='assets/icons/Pasted Graphic 2.png') }}" alt="FitFusion logo"/>  <!--Instead of a missing/broken icon, the browser shows the alt text(fit fusion logo).-->
                         <span>FitFusion</span> <!--span= keep this text on 1 line next to the image , don't put this text on a new line![LOGO ICON] FitFusion-->
                     </a>
                 </div>
@@ -80,9 +80,11 @@
                     <div class="hero-visual">
                         <div class="hero-image-wrapper">
                             <img
-                                src="assets/images/hero-athlete.jpg"
+                                src="{{ url_for('static', filename='assets/images/hero-athlete.jpg') }}"
                                 alt="athlete lifting weights in the gym"
-                                class="hero-image"/>
+                                class="hero-image"
+                            />
+
 
                             <!--stats card overlay (no styling yet)-->
                             <div class="hero-stat hero-stat-sleep">
@@ -123,9 +125,11 @@
                     <a href="back-squat.html" class="program-card-link">
                         <article class="program-card program-legs">
                             <img
-                                src="assets/images/program-legs.jpg"
-                                alt="Athlete doing a dead lift"
-                                class="program-image"/>
+                                src="{{ url_for('static', filename='assets/images/program-legs.jpg') }}"
+                                alt="athlete lifting weights in the gym"
+                                class="program-image"
+                            />
+
 
                             <div class="program-card-text">
                                 <p class="program-tag">Legs</p>
@@ -137,10 +141,11 @@
                     <a href="chest.html" class="program-card-link">
                         <article class="program-card program-chest">
                             <img
-                                src="assets/images/program-chest.jpg"
-                                alt="Athlete doing bench press"
-                                class="program-image"/>
-
+                                src="{{ url_for('static', filename='assets/images/program-chest.jpg') }}"
+                                alt="athlete lifting weights in the gym"
+                                class="program-image"
+                            />
+    
                             <div class="program-card-text">
                                 <p class="program-tag">Chest</p>
                             </div>
@@ -151,9 +156,10 @@
                     <a href="back.html" class="program-card-link">
                         <article class="program-card program-back">
                             <img
-                                src="assets/images/program-back.jpg"
-                                alt="Athlete doing pull ups"
-                                class="program-image"/>
+                                src="{{ url_for('static', filename='assets/images/program-back.jpg') }}"
+                                alt="athlete lifting weights in the gym"
+                                class="program-image"
+                            />
 
                             <div class="program-card-text">
                                 <p class="program-tag">Back</p>
@@ -162,40 +168,50 @@
                     </a>
 
                     <!--card 4: arms-->
-                    <article class="program-card program-arms">
-                        <img
-                            src="assets/images/program-arms.jpg"
-                            alt="Athlete doing bicep curls"
-                            class="program-image"/>
+                    <a href="arms.html" class="program-card-link">
+                        <article class="program-card program-arms">
+                            <img
+                                src="{{ url_for('static', filename='assets/images/program-arms.jpg') }}"
+                                alt="athlete lifting weights in the gym"
+                                class="program-image"
+                            />
 
-                        <div class="program-card-text">
-                            <p class="program-tag">Arms</p>
-                        </div>
-                    </article>
+                            <div class="program-card-text">
+                                <p class="program-tag">Arms</p>
+                            </div>
+                        </article>
+                    </a>
 
                     <!--card 5: shoulders-->
-                    <article class="program-card program-shoulders">
-                        <img
-                            src="assets/images/program-shoulders.jpg"
-                            alt="Athlete doing shoulder press"
-                            class="program-image"/>
+                    <a href="shoulders.html" class="exercise-card-link">
+                        <article class="program-card program-shoulders">
+                            <img
+                                src="{{ url_for('static', filename='assets/images/program-shoulders.jpg') }}"
+                                alt="athlete doing lateral raises"
+                                class="program-image"
+                            />
 
-                        <div class="program-card-text">
-                            <p class="program-tag">Shoulders</p>
-                        </div>
-                    </article>
+
+                            <div class="program-card-text">
+                                <p class="program-tag">Shoulders</p>
+                            </div>
+                        </article>
+                    </a>
 
                     <!--card 6: triceps-->
-                    <article class="program-card program-triceps">
-                        <img
-                            src="assets/images/program-triceps.jpg"
-                            alt="Athlete doing tricep dips"
-                            class="program-image"/>
+                    <a href="triceps.html" class="exercise-card-link">
+                        <article class="program-card program-triceps">
+                            <img
+                                src="{{ url_for('static', filename='assets/images/program-triceps.jpg') }}"
+                                alt="athlete doing lateral raises"
+                                class="program-image"
+                            />
 
-                        <div class="program-card-text">
-                            <p class="program-tag">Triceps</p>
-                        </div>
-                    </article>
+                            <div class="program-card-text">
+                                <p class="program-tag">Triceps</p>
+                            </div>
+                        </article>
+                    </a>
                 </div>
             </section>
 
@@ -216,8 +232,9 @@
                             <div class="testimonial-header">
                                 <div class="testimonial-avatar">
                                     <img
-                                        src="assets/images/testimonials-sarah.jpg"
-                                        alt="photo of Sarah Williams"/>                                   
+                                        src="{{ url_for('static', filename='assets/images/testimonials-sarah.jpg') }}"
+                                        alt="photo of Sarah Williams"
+                                    />                                  
                                 </div>
                                 <div class="testimonial-quote-icon"> “ </div>
 
@@ -238,8 +255,9 @@
                             <div class="testimonial-header">
                                 <div class="testimonial-avatar">
                                     <img
-                                        src="assets/images/testimonials-john.jpg"
-                                        alt="photo of John Smith"/>
+                                        src="{{ url_for('static', filename='assets/images/testimonials-john.jpg') }}"
+                                        alt="photo of John Miller"
+                                    />                                 
                                 </div>
                                 <div class="testimonial-quote-icon"> “ </div>
                             </div>
@@ -261,8 +279,9 @@
                             <div class="testimonial-header">
                                 <div class="testimonial-avatar">
                                     <img
-                                        src="assets/images/testimonials-emma.jpg"
-                                        alt="photo of Emma Johnson"/>
+                                        src="{{ url_for('static', filename='assets/images/testimonials-emma.jpg') }}"
+                                        alt="photo of Emma"
+                                    />                                 
                                 </div>
                                 <div class="testimonial-quote-icon"> “ </div>
                             </div>
@@ -283,8 +302,9 @@
                             <div class="testimonial-header">
                                 <div class="testimonial-avatar">
                                     <img
-                                        src="assets/images/testimonials-mike.jpg"
-                                        alt="Photo of David park"/>
+                                        src="{{ url_for('static', filename='assets/images/testimonials-mike.jpg') }}"
+                                        alt="photo of Mike"
+                                    />                                 
                                 </div>
                                 <div class="testimonial-quote-icon"> “ </div>
                             </div>
@@ -305,8 +325,9 @@
                             <div class="testimonial-header">
                                 <div class="testimonial-avatar">
                                     <img
-                                        src="assets/images/testimonials-marcus.jpg"
-                                        alt="photo of Marcus Chen"/>
+                                        src="{{ url_for('static', filename='assets/images/testimonials-marcus.jpg') }}"
+                                        alt="photo of Marcus"
+                                    />                                 
                                 </div>
                                 <div class="testimonial-quote-icon"> “ </div>
                             </div>
@@ -362,9 +383,10 @@
             <div class="footer-brand">
                 <div class="brand-logo">
                     <img
-                        src="assets/icons/Pasted Graphic 2.png"
+                        src="{{ url_for('static', filename='assets/icons/Pasted Graphic 2.png') }}"
                         alt="FitFusion logo"
-                        class="footer-brand-logo"/>
+                        class="footer-brand-logo"
+                    />
 
                     <span class="footer-brand-text">FitFusion</span>
                 </div>
@@ -385,19 +407,32 @@
                 <ul class="footer-social-list">
                     <li>
                         <a href="#" class="social-link">
-                            <img src="assets/icons/instagram.png" alt= instagram icon class="social-icon">
+                            <img
+                                src="{{ url_for('static', filename='assets/icons/instagram.png') }}"
+                                alt="instagram icon"
+                                class="social-icon"
+                            />
                         </a>
                     </li>
                     <li>
                         <a href="#" class="social-link">
-                            <img src="assets/icons/facebook.png" alt= facebook icon class="social-icon">
+                            <img
+                                src="{{ url_for('static', filename='assets/icons/facebook.png') }}"
+                                alt="facebook icon"
+                                class="social-icon"
+                            />
                         </a>
                     </li>
                     <li>
                         <a href="#" class="social-link">
-                            <img src="assets/icons/tiktok.png" alt= tiktok icon class="social-icon">
+                            <img
+                                src="{{ url_for('static', filename='assets/icons/tiktok.png') }}"
+                                alt="tiktok icon"
+                                class="social-icon"
+                            />
                         </a>
                     </li>
+
                 </ul>
             </div>
 
@@ -430,9 +465,9 @@
             </p>
         </div>       
     </footer>
-</div>
 
-<!-- our main javascript file (for interactions & animations)-->
-    <script src="scripts/main.js"></script>
+
+    <!-- main javascript file (for interactions & animations)-->
+    <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
 </body>
 </html>
