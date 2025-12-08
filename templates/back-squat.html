@@ -17,7 +17,11 @@
     <header class="exercise-header">
         <nav class="exercise-nav">
             <!--back arrow sends user back to programs on the home page-->
-            <a href="index.html#programs" class="exercise-back-button" aria-label="Back to programs">
+            <a
+                href="{{ url_for('home') }}#programs"
+                class="exercise-back-button"
+                aria-label="Back to programs"
+            >
                 <span class="exercise-back-icon">←</span>
             </a>
 
@@ -133,6 +137,68 @@
                     <p class="exercise-step-text">Drive through heels and stand tall</p>
                 </li>
             </ol>
+        </section>
+
+        <section class="log-entry">
+            <h2 class="log-title">Log Your Set</h2>
+
+            <form method="POST" class="log-form">
+                <label>
+                    Weight (kg)
+                    <input type="number" name="weight" step="0.1" required>
+                </label>
+
+                <label>
+                    Sets
+                    <input type="number" name="sets" required>
+                </label>
+
+                <label>
+                    Reps
+                    <input type="number" name="reps" required>
+                </label>
+
+                <button type="submit" class="log-submit">Save Log</button>
+            </form>
+        </section>
+
+        <section class="log-list">
+            <!--header: row: weight/ sets / reps/ date/ actions-->
+            <div class="log-header">
+                <span class="log-header-label">Weight</span>
+                <span class="log-header-label">Sets</span>
+                <span class="log-header-label">Reps</span>
+                <span class="log-header-label">Date</span>
+                <span class="log-header-label">Actions</span>
+            </div>
+        
+        
+            <div class="log-rows">
+                {% for log in logs %}
+                    <div class="log-row">
+                        <div class="log-cell log-cell--weight">
+                            {{ log.weight }} kg
+                        </div>
+
+                        <div class="log-cell log-cell--sets">
+                            {{ log.sets }}
+                        </div>
+
+                        <div class="log-cell log-cell--reps">
+                            {{ log.reps }}
+                        </div>
+
+                        <div class="log-cell log-cell--date">
+                            {{ log.logged_at }}
+                        </div>
+
+                        <span class="log-cell log-cell--actions">
+                            <button class="log-btn log-btn--edit" type="button">Edit</button>
+                            <button class="log-btn log-btn--delete" type="button">Delete</button>
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
         </section>
     </main>
 

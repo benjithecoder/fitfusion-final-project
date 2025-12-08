@@ -17,7 +17,11 @@
     <header class="exercise-header">
         <nav class="exercise-nav">
             <!--back arrow sends user back to programs on the home page-->
-            <a href="index.html#programs" class="exercise-back-button" aria-label="Back to programs">
+            <a
+                href="{{ url_for('home') }}#programs"
+                class="exercise-back-button"
+                aria-label="Back to programs"
+            >
                 <span class="exercise-back-icon">←</span>
             </a>
 
