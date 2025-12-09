@@ -52,29 +52,129 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // -------------------------EXERCISE DETAIL TABS ABOUT/GUIDE-------------------------
 
+/*  
+===========================================================
+TAB SYSTEM FOR ABOUT / GUIDE / LOG
+-----------------------------------------------------------
+This JavaScript controls which panel is visible.
+
+Tabs:        <button class="exercise-tab" data-tab="about">
+Panels:      <section data-tab-panel="about">
+
+Goal:  
+- Clicking a tab shows the matching panel.
+- Other panels become hidden.
+- When the page reloads (after POST), the tab from the URL hash
+  (#about, #guide, #log) becomes active again.
+===========================================================
+*/
+
+
+// STEP 1 — Select all tab buttons ("About", "Guide", "Log")
 const exerciseTabs = document.querySelectorAll(".exercise-tab");
+
+// STEP 2 — Select all panels that match those tabs
 const exercisePanels = document.querySelectorAll("[data-tab-panel]");
 
-if (exerciseTabs && exercisePanels.length) {
-    exerciseTabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-            const target = tab.dataset.tab;
 
-            // update tab active state
-            exerciseTabs.forEach((t) => t.classList.remove("is-active"));
-            tab.classList.add("is-active");
 
-            // show matching panel, hide other
-            exercisePanels.forEach((panel) => {
-                if (panel.dataset.tabPanel === target) {
-                    panel.hidden = false;
-                    panel.classList.add("is-active");
-                } else {
-                    panel.hidden = true;
-                    panel.classList.remove("is-active");
-                }
-            });
-        });
+/*
+===========================================================
+FUNCTION: showTab(target)
+-----------------------------------------------------------
+This function makes ONE tab active and shows the matching panel.
+"target" is a string: "about", "guide", or "log".
+===========================================================
+*/
+function showTab(target) {
+
+    // Loop over ALL tab buttons
+    exerciseTabs.forEach((t) => {
+
+        // If this tab's data-tab matches the target → activate it
+        if (t.dataset.tab === target) {
+            t.classList.add("is-active");          // highlight tab
+            t.setAttribute("aria-selected", "true"); // accessibility
+        } 
+        
+        // Otherwise deactivate this tab
+        else {
+            t.classList.remove("is-active");
+            t.setAttribute("aria-selected", "false");
+        }
+    });
+
+
+
+    // Loop over all tab panels
+    exercisePanels.forEach((panel) => {
+
+        // If panel's data-tab-panel matches the target → show it
+        if (panel.dataset.tabPanel === target) {
+            panel.hidden = false;                  // make visible
+            panel.classList.add("is-active");      // optional styling hook
+        } 
+        
+        // Otherwise hide the panel
+        else {
+            panel.hidden = true;
+            panel.classList.remove("is-active");
+        }
     });
 }
+
+
+
+/*
+===========================================================
+EVENT LISTENERS — Handle clicks on tabs
+-----------------------------------------------------------
+When a user clicks a tab:
+- Save the tab name in the URL as #about / #guide / #log
+- Call showTab() to update the UI
+===========================================================
+*/
+if (exerciseTabs.length && exercisePanels.length) {
+
+    exerciseTabs.forEach((tab) => {
+
+        tab.addEventListener("click", () => {
+            // Get which tab was clicked (about/guide/log)
+            const target = tab.dataset.tab;
+
+            // Save the tab name in the URL → #log
+            // Very important: this allows reload to keep the same tab
+            window.location.hash = target;
+
+            // Show the correct panel
+            showTab(target);
+        });
+    });
+
+
+
+    /*
+    ===========================================================
+    PAGE LOAD BEHAVIOR
+    -----------------------------------------------------------
+    When the page loads (including after POST reload):
+    - Read the URL hash (#log)
+    - If there is a hash, activate that tab
+    - Otherwise default to "about"
+    ===========================================================
+    */
+
+    // Remove the "#" → "log"
+    const hash = window.location.hash.replace("#", "");
+
+    if (hash) {
+        // Example → #log → showTab("log")
+        showTab(hash);
+    } 
+    else {
+        // No hash? First visit → show About panel
+        showTab("about");
+    }
+}
+
 
