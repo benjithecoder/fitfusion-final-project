@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Fitfusion</title>
+
+    <!-- Makes the layout adapt to mobile screens instead of staying tiny -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Link to our main stylesheet (we’ll style everything here later) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+
+
+</head>
+<body>
+    <div class="wrapper-register">
+        <form method="POST">
+            <p class="form-login">Register</p>
+            <div class="input-box">
+                <input type="text" name="email" placeholder="Email" autofocus autocomplete="off" required>
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="password_hash" placeholder="Password" required>
+            </div>
+
+            <button class="btn" type="submit">Register</button>
+
+            <div class="register-link">
+                <p>Already have an account? <a href="{{ url_for('login') }}">Signin</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

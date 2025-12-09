@@ -44,11 +44,22 @@
                 <!--right side: desktop cta + mobile toggle-->
                 <div class="nav-right">
 
-                    <!--desktop CTA button-->
-                    <a href="#programs" class="btn-get-started nav-cta-desktop">
-                        Get Started
-                    </a>
-                
+                    <div class="nav-right-two">
+                        <!--desktop CTA button-->
+                        <a href="#programs" class="btn-get-started nav-cta-desktop">
+                            Get Started
+                        </a>
+
+                        <!--LOGOUT or LOG IN button-->
+                        {% if session.get("user_id") %}
+                            <!--user is logged in-->
+                            <a href="{{ url_for('logout') }}" class="logout-btn">Log out</a>
+
+                        {% else %}
+                            <!--user is NOT logged in-->
+                            <a href="{{ url_for('login') }}" class="login-btn">Log in</a>
+                        {% endif %}
+                    </div>               
 
                     <!--mobile hamburger/ close button-->
                     <button

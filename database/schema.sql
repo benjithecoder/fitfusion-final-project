@@ -31,7 +31,7 @@ CREATE TABLE
         exercise_id INTEGER NOT NULL, -- This tells you which exercise the log belongs to.so ig squat = 1 and if the user is on the squat page, the log will always use: exercise_id = 1
         weight REAL NOT NULL, -- The type REAL means it can store decimal numbers too. like 80.2 kg
         reps INTEGER NOT NULL,
-        sets INTEGER NOT NULL,
+        sets_ INTEGER NOT NULL,
         logged_at DATE DEFAULT (DATE ('now')),
         FOREIGN KEY (user_id) REFERENCES user (id), -- ❌ You cannot insert a log for a user that doesn't exist
         FOREIGN KEY (exercise_id) REFERENCES exercises (id) -- ❌ You cannot insert a log for an exercise that doesn't exist
