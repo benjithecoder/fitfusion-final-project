@@ -77,7 +77,7 @@ def register():
         # log the user in immediately after registering
         session["user_id"] = user["id"]
 
-        return "Registered! ('ll add proper redirect + login page next)"
+        return redirect(url_for("home"))
 
     # GEt request --> just show the registration form
     return render_template("register.html")
@@ -304,24 +304,352 @@ def chest():
     return render_template("chest.html", logs=logs, edit_log_id=edit_log_id)
 
 
-@app.route("/back.html")
+@app.route("/back.html", methods=["GET", "POST"])
 def back():
-    return render_template("back.html")
+    # 1) open Database(db) connection
+    db = get_db_connection()
+
+    # 2) look up the exercise row for ' barbell_row'
+    exercise = db.execute(
+        # fetchone return a row like {"id":1} if found or None if no such exercise exist.
+        "SELECT id FROM exercises WHERE slug = ?", ("barbell_row",)).fetchone()
+
+    if exercise is None:
+        # this means the exercise table doesn't have 'barbell_row'
+        print("ERROR: 'barbell_row' not found in exercises table!")
+        return "exercise not found", 404
+
+    exercise_id = exercise["id"]
+
+    user_id = session.get("user_id")
+
+    if user_id is None:
+        return redirect(url_for("login"))
+
+    edit_log_id = None
+
+    # 3) handles form submission (POST)
+    if request.method == "POST":
+        # did this POST come from the delete button?
+        delete_id = request.form.get("delete_log_id")
+        update_id = request.form.get("update_log_id")
+        edit_id = request.form.get("edit_log_id")
+
+        if delete_id:
+            # Delete the specific log row that matches this id
+            db.execute(
+                """DELETE FROM workout_logs
+                WHERE id = ? AND user_id = ? AND exercise_id = ?""",
+                (delete_id, user_id, exercise_id)
+            )
+            db.commit()
+
+        elif update_id:
+            # save changes for existing log (UPDATE)
+            weight = request.form.get("weight")
+            sets_ = request.form.get("sets")
+            reps = request.form.get("reps")
+
+            db.execute(
+                """UPDATE workout_logs 
+                SET weight = ?, sets = ?, reps = ?
+                WHERE id = ? AND user_id = ? AND exercise_id = ?""",
+                (weight, sets_, reps, update_id, user_id, exercise_id)
+            )
+            db.commit()
+
+        elif edit_id:
+            # put this row into edit mode no DB changes yet
+            edit_log_id = int(edit_id)
+
+        else:
+            # otherwise, it's a normal "save log" submission
+            # for this step we just read the form values.
+            weight = request.form.get("weight")
+            # set is a build in python function so to not confuse the 2 i use sets_ .
+            sets_ = request.form.get("sets")
+            reps = request.form.get("reps")
+
+            # insert the new log row into workout_logs with this user, this exercise, this weight , these reps, and these sets.
+            db.execute(
+                """INSERT INTO workout_logs (user_id, exercise_id, weight, sets, reps) VALUES(?,?,?,?,?)""",
+                (user_id, exercise_id, weight, sets_, reps)
+            )
+            # this makes the changes permanent , without this the insert would be temporary.
+            db.commit()
+
+    # always load logs (for both GET and after POST)
+    logs = db.execute(
+        """
+        SELECT id, weight, sets, reps, logged_at FROM workout_logs
+        WHERE user_id = ? AND exercise_id = ?
+        ORDER BY logged_at DESC
+        """,
+        (user_id, exercise_id)
+    ).fetchall()
+
+    return render_template("back.html", logs=logs, edit_log_id=edit_log_id)
 
 
-@app.route("/arms.html")
+@app.route("/arms.html", methods=["GET", "POST"])
 def arms():
-    return render_template("arms.html")
+    # 1) open Database(db) connection
+    db = get_db_connection()
+
+    # 2) look up the exercise row for ' bicep_curl'
+    exercise = db.execute(
+        # fetchone return a row like {"id":1} if found or None if no such exercise exist.
+        "SELECT id FROM exercises WHERE slug = ?", ("bicep_curl",)).fetchone()
+
+    if exercise is None:
+        # this means the exercise table doesn't have 'bicep_curl'
+        print("ERROR: 'bicep_curl' not found in exercises table!")
+        return "exercise not found", 404
+
+    exercise_id = exercise["id"]
+
+    user_id = session.get("user_id")
+
+    if user_id is None:
+        return redirect(url_for("login"))
+
+    edit_log_id = None
+
+    # 3) handles form submission (POST)
+    if request.method == "POST":
+        # did this POST come from the delete button?
+        delete_id = request.form.get("delete_log_id")
+        update_id = request.form.get("update_log_id")
+        edit_id = request.form.get("edit_log_id")
+
+        if delete_id:
+            # Delete the specific log row that matches this id
+            db.execute(
+                """DELETE FROM workout_logs
+                WHERE id = ? AND user_id = ? AND exercise_id = ?""",
+                (delete_id, user_id, exercise_id)
+            )
+            db.commit()
+
+        elif update_id:
+            # save changes for existing log (UPDATE)
+            weight = request.form.get("weight")
+            sets_ = request.form.get("sets")
+            reps = request.form.get("reps")
+
+            db.execute(
+                """UPDATE workout_logs 
+                SET weight = ?, sets = ?, reps = ?
+                WHERE id = ? AND user_id = ? AND exercise_id = ?""",
+                (weight, sets_, reps, update_id, user_id, exercise_id)
+            )
+            db.commit()
+
+        elif edit_id:
+            # put this row into edit mode no DB changes yet
+            edit_log_id = int(edit_id)
+
+        else:
+            # otherwise, it's a normal "save log" submission
+            # for this step we just read the form values.
+            weight = request.form.get("weight")
+            # set is a build in python function so to not confuse the 2 i use sets_ .
+            sets_ = request.form.get("sets")
+            reps = request.form.get("reps")
+
+            # insert the new log row into workout_logs with this user, this exercise, this weight , these reps, and these sets.
+            db.execute(
+                """INSERT INTO workout_logs (user_id, exercise_id, weight, sets, reps) VALUES(?,?,?,?,?)""",
+                (user_id, exercise_id, weight, sets_, reps)
+            )
+            # this makes the changes permanent , without this the insert would be temporary.
+            db.commit()
+
+    # always load logs (for both GET and after POST)
+    logs = db.execute(
+        """
+        SELECT id, weight, sets, reps, logged_at FROM workout_logs
+        WHERE user_id = ? AND exercise_id = ?
+        ORDER BY logged_at DESC
+        """,
+        (user_id, exercise_id)
+    ).fetchall()
+
+    return render_template("arms.html", logs=logs, edit_log_id=edit_log_id)
 
 
-@app.route("/shoulders.html")
+@app.route("/shoulders.html", methods=["GET", "POST"])
 def shoulders():
-    return render_template("shoulders.html")
+    # 1) open Database(db) connection
+    db = get_db_connection()
+
+    # 2) look up the exercise row for 'shoulder_press'
+    exercise = db.execute(
+        # fetchone return a row like {"id":1} if found or None if no such exercise exist.
+        "SELECT id FROM exercises WHERE slug = ?", ("shoulder_press",)).fetchone()
+
+    if exercise is None:
+        # this means the exercise table doesn't have 'shoulder_press'
+        print("ERROR: 'shoulder_press' not found in exercises table!")
+        return "exercise not found", 404
+
+    exercise_id = exercise["id"]
+
+    user_id = session.get("user_id")
+
+    if user_id is None:
+        return redirect(url_for("login"))
+
+    edit_log_id = None
+
+    # 3) handles form submission (POST)
+    if request.method == "POST":
+        # did this POST come from the delete button?
+        delete_id = request.form.get("delete_log_id")
+        update_id = request.form.get("update_log_id")
+        edit_id = request.form.get("edit_log_id")
+
+        if delete_id:
+            # Delete the specific log row that matches this id
+            db.execute(
+                """DELETE FROM workout_logs
+                WHERE id = ? AND user_id = ? AND exercise_id = ?""",
+                (delete_id, user_id, exercise_id)
+            )
+            db.commit()
+
+        elif update_id:
+            # save changes for existing log (UPDATE)
+            weight = request.form.get("weight")
+            sets_ = request.form.get("sets")
+            reps = request.form.get("reps")
+
+            db.execute(
+                """UPDATE workout_logs 
+                SET weight = ?, sets = ?, reps = ?
+                WHERE id = ? AND user_id = ? AND exercise_id = ?""",
+                (weight, sets_, reps, update_id, user_id, exercise_id)
+            )
+            db.commit()
+
+        elif edit_id:
+            # put this row into edit mode no DB changes yet
+            edit_log_id = int(edit_id)
+
+        else:
+            # otherwise, it's a normal "save log" submission
+            # for this step we just read the form values.
+            weight = request.form.get("weight")
+            # set is a build in python function so to not confuse the 2 i use sets_ .
+            sets_ = request.form.get("sets")
+            reps = request.form.get("reps")
+
+            # insert the new log row into workout_logs with this user, this exercise, this weight , these reps, and these sets.
+            db.execute(
+                """INSERT INTO workout_logs (user_id, exercise_id, weight, sets, reps) VALUES(?,?,?,?,?)""",
+                (user_id, exercise_id, weight, sets_, reps)
+            )
+            # this makes the changes permanent , without this the insert would be temporary.
+            db.commit()
+
+    # always load logs (for both GET and after POST)
+    logs = db.execute(
+        """
+        SELECT id, weight, sets, reps, logged_at FROM workout_logs
+        WHERE user_id = ? AND exercise_id = ?
+        ORDER BY logged_at DESC
+        """,
+        (user_id, exercise_id)
+    ).fetchall()
+
+    return render_template("shoulders.html", logs=logs, edit_log_id=edit_log_id)
 
 
-@app.route("/triceps.html")
+@app.route("/triceps.html", methods=["GET", "POST"])
 def triceps():
-    return render_template("triceps.html")
+    # 1) open Database(db) connection
+    db = get_db_connection()
+
+    # 2) look up the exercise row for 'tricep_extension'
+    exercise = db.execute(
+        # fetchone return a row like {"id":1} if found or None if no such exercise exist.
+        "SELECT id FROM exercises WHERE slug = ?", ("tricep_extension",)).fetchone()
+
+    if exercise is None:
+        # this means the exercise table doesn't have 'tricep_extension'
+        print("ERROR: 'tricep_extension' not found in exercises table!")
+        return "exercise not found", 404
+
+    exercise_id = exercise["id"]
+
+    user_id = session.get("user_id")
+
+    if user_id is None:
+        return redirect(url_for("login"))
+
+    edit_log_id = None
+
+    # 3) handles form submission (POST)
+    if request.method == "POST":
+        # did this POST come from the delete button?
+        delete_id = request.form.get("delete_log_id")
+        update_id = request.form.get("update_log_id")
+        edit_id = request.form.get("edit_log_id")
+
+        if delete_id:
+            # Delete the specific log row that matches this id
+            db.execute(
+                """DELETE FROM workout_logs
+                WHERE id = ? AND user_id = ? AND exercise_id = ?""",
+                (delete_id, user_id, exercise_id)
+            )
+            db.commit()
+
+        elif update_id:
+            # save changes for existing log (UPDATE)
+            weight = request.form.get("weight")
+            sets_ = request.form.get("sets")
+            reps = request.form.get("reps")
+
+            db.execute(
+                """UPDATE workout_logs 
+                SET weight = ?, sets = ?, reps = ?
+                WHERE id = ? AND user_id = ? AND exercise_id = ?""",
+                (weight, sets_, reps, update_id, user_id, exercise_id)
+            )
+            db.commit()
+
+        elif edit_id:
+            # put this row into edit mode no DB changes yet
+            edit_log_id = int(edit_id)
+
+        else:
+            # otherwise, it's a normal "save log" submission
+            # for this step we just read the form values.
+            weight = request.form.get("weight")
+            # set is a build in python function so to not confuse the 2 i use sets_ .
+            sets_ = request.form.get("sets")
+            reps = request.form.get("reps")
+
+            # insert the new log row into workout_logs with this user, this exercise, this weight , these reps, and these sets.
+            db.execute(
+                """INSERT INTO workout_logs (user_id, exercise_id, weight, sets, reps) VALUES(?,?,?,?,?)""",
+                (user_id, exercise_id, weight, sets_, reps)
+            )
+            # this makes the changes permanent , without this the insert would be temporary.
+            db.commit()
+
+    # always load logs (for both GET and after POST)
+    logs = db.execute(
+        """
+        SELECT id, weight, sets, reps, logged_at FROM workout_logs
+        WHERE user_id = ? AND exercise_id = ?
+        ORDER BY logged_at DESC
+        """,
+        (user_id, exercise_id)
+    ).fetchall()
+
+    return render_template("triceps.html", logs=logs, edit_log_id=edit_log_id)
 
 
 @app.route("/debug-session")

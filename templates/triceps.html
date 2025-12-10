@@ -46,7 +46,7 @@
             <figure class="exercise-figure">
                 <video
                     class="exercise-video"
-                    src="{{ url_for('static', filename='assets/videos/back-squat.mp4') }}"
+                    src="{{ url_for('static', filename='assets/videos/triceps.mp4') }}"
                     autoplay
                     muted
                     loop
@@ -57,27 +57,41 @@
 
         <!--tabs bar (about / guide ) pinned to bottom of stage-->
         <div class="exercise-tabs" role="tablist" aria-label="Exercise information"> <!-- role is only for screen readers -->
-            <div class="slighting-about">
-                <button
-                    class="exercise-tab is-active"
-                    type="button"
-                    role="tab"
-                    aria-selected="true"
-                    aria-controls="exercise-about"
-                    id="exercise-tab-about"
-                    data-tab="about"
-                >About</button>
-            </div>
-            <div class="slighting-guide">
-                <button
-                    class="exercise-tab"
-                    type="button"
-                    role="tab"
-                    aria-selected="false"
-                    aria-controls="exercise-guide"
-                    id="exercise-tab-guide"
-                    data-tab="guide"
-                >Guide</button>
+            <div class="slighting-column">
+                <div class="slighting-about">
+                    <button
+                        class="exercise-tab is-active"
+                        type="button"
+                        role="tab"
+                        aria-selected="true"
+                        aria-controls="exercise-about"
+                        id="exercise-tab-about"
+                        data-tab="about"> <!-- It stores the value about on that element so your JavaScript can read it via element.dataset.tab-->
+                    About</button>
+                </div>
+                <div class="slighting-guide">
+                    <button
+                        class="exercise-tab"
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="exercise-guide"
+                        id="exercise-tab-guide"
+                        data-tab="guide"
+                    >Guide</button>
+                </div>
+                
+                <div class="slighting-log">
+                    <button
+                        class="exercise-tab"
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="exercise-log"
+                        id="exercise-tab-log"
+                        data-tab="log"
+                    >Log</button>
+                </div>
             </div>
         </div>
         
@@ -140,6 +154,150 @@
                     <p class="exercise-step-text">Return slowly to starting position.</p>
                 </li>
             </ol>
+        </section>
+
+        <!-- log panel-->
+        <section
+            id="exercise-log"
+            class="exercise-panel exercise-panel--log"
+            role="tabpanel"
+            aria-labelledby="exercise-tab-log"
+            data-tab-panel="log"
+            hidden
+        >
+
+            <section class="log-entry">
+                <form method="POST" class="log-form" action="#log">
+                    <input
+                        type="number" 
+                        name="weight" 
+                        step="0.1" 
+                        required
+                        class="log-input"
+                        placeholder="weight (kg)"
+                    >
+                    
+                    <input
+                        type="number" 
+                        name="sets" 
+                        required
+                        class="log-input"
+                        placeholder="Sets"
+                    >
+                    
+                    <input
+                        type="number" 
+                        name="reps" 
+                        required
+                        class="log-input"
+                        placeholder="Reps"
+                    >
+
+                    <button
+                        type="submit" 
+                        class="log-submit"
+                        aria-label="Add log entry"
+                    > + </button>                                            
+                </form>
+            </section>
+
+            <section class="log-list">
+                <!--header: row: weight/ sets / reps/ date/ actions-->
+                {% if logs %}
+                    <!--header row only show when there are logs entered.-->
+                    <div class="log-header">
+                        <span class="log-header-label">Weight</span>
+                        <span class="log-header-label">Sets</span>
+                        <span class="log-header-label">Reps</span>
+                        <span class="log-header-label">Date</span>
+                        <span class="log-header-label">Actions</span>
+                    </div>
+            
+            
+                    <div class="log-rows">
+                        {% for log in logs %}
+                            {% if edit_log_id and log.id == edit_log_id %}
+                                <!--EDIT MODE for this specific row-->
+                                <form method="POST" class="log-row log-row--edit" action="#log">
+                                    <!--i'll use this later to UPDATE in the backend-->
+                                    <input type="hidden" name="update_log_id" value="{{ log.id }}">
+
+                                    <span class="log-cell log-cell--weight">
+                                        <input
+                                            type="number"
+                                            step="0.1"
+                                            name="weight"
+                                            class="log-input"
+                                            value="{{ log.weight }}" 
+                                        >
+                                    </span>
+
+                                    <span class="log-cell log-cell--sets">
+                                        <input
+                                            type="number"
+                                            name="sets"
+                                            class="log-input"
+                                            value="{{ log.sets }}" 
+                                        >
+                                    </span>
+
+                                    <span class="log-cell log-cell--weight">
+                                        <input
+                                            type="number"                                    
+                                            name="reps"
+                                            class="log-input"
+                                            value="{{ log.reps }}" 
+                                        >
+                                    </span>
+
+                                    <span class="log-cell log-cell--date">
+                                        {{ log.logged_at }}
+                                    </span>
+
+                                    <span class="log-cell log-cell--actions">
+                                        <button type="submit" class="log-btn log-btn--save">✅</button>
+
+                                        <!-- cancel just reloads the page, clearing edit_log_id-->
+                                        <a href="{{ url_for('triceps') }}" class="log-btn log-btn--cancel">❌</a> 
+                                    </span>
+                                </form>
+                            {% else %}
+                                <!-- NORMAL VIEW MODE ROW-->
+                                <div class="log-row">
+                                    <div class="log-cell log-cell--weight">
+                                        {{ log.weight }} kg
+                                    </div>
+
+                                    <div class="log-cell log-cell--sets">
+                                        {{ log.sets }}
+                                    </div>
+
+                                    <div class="log-cell log-cell--reps">
+                                        {{ log.reps }}
+                                    </div>
+
+                                    <div class="log-cell log-cell--date">
+                                        {{ log.logged_at }}
+                                    </div>
+
+                                    <div class="log-cell log-cell--actions">
+                                        <form method="POST" class="log-delete-form" action="#log">
+                                            <!--hidden input, caries the log's id to flask-->
+                                            <input type="hidden" name="delete_log_id" value="{{ log.id }}">
+
+                                            <button class="log-btn log-btn--delete" type="submit">Delete</button>
+                                        </form>
+                                        <form method="POST" class="log-edit-form" action="#log">
+                                            <input type="hidden" name="edit_log_id" value="{{ log.id }}">
+                                            <button class="log-btn log-btn--edit" type="submit">Edit</button>
+                                        </form>        
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </section>
         </section>
     </main>
 
